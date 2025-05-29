@@ -1,4 +1,4 @@
-export interface transaction {
+export interface TransactionView {
     fromAccount:number,
     toAccount:number,
     amount:number,

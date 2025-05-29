@@ -7,6 +7,9 @@ import bcrypt from "bcryptjs";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../config";
 import AuthUser from "../middleWare/AuthUser";
+import { ITransaction } from "../models/transaction/ITransaction";
+import {TransactionView} from "../models/transaction/transactionView";
+import Transaction from "../models/transaction/Transaction";
 const UserRouter:express.Router = express.Router();
 UserRouter.post("/register",[
     body("firstName").not().isEmpty().withMessage("First Name can not left empty"),
@@ -164,4 +167,64 @@ UserRouter.get("/me",AuthUser,async(req:express.Request,res:express.Response)=>{
         return res.status(500).json(err);
     }
 });
+UserRouter.patch("/transfer",AuthUser,[
+    body("toAccount").not().isEmpty().withMessage("TO account is not mentioned"),
+    body("amount").not().isEmpty().withMessage("Amount is not mentioned"),
+],async(req:express.Request,res:express.Response)=>{
+    let transactionData:TransactionView = {
+        fromAccount:0,
+        toAccount:req.body.toAccount,
+        amount:req.body.amount,
+        timeStamp:new Date(),
+        type:"transfer",
+        errorMessage:""
+    }
+    try {
+        let userData:UserView = req.body.userData;
+        let user:IUser | null = await User.findOne({firstName:userData.firstName,lastName:userData.lastName,email:userData.email});
+        if(user) {
+            if(user.accountNumber!==transactionData.toAccount) {
+                if(user.amount>transactionData.amount) {
+                    let secondParty:IUser | null = await User.findOne({accountNumber:transactionData.toAccount});
+                    if(secondParty) {
+                        user = await User.findOneAndUpdate({accountNumber:user.accountNumber},{amount:user.amount-transactionData.amount});
+                        secondParty = await User.findOneAndUpdate({accountNumber:secondParty.accountNumber},{amount:secondParty.amount+transactionData.amount});
+                        transactionData = {
+                            ...transactionData,
+                            fromAccount: user && user.accountNumber !== undefined ? user.accountNumber : 0,
+                            toAccount: secondParty && secondParty.accountNumber !== undefined ? secondParty.accountNumber : 0,
+                        }
+                        let transaction:ITransaction = await new Transaction(transactionData);
+                        transaction.save();
+                        transactionData = {} as TransactionView;
+                        return res.status(200).json({});
+                    }
+                    else {
+                        transactionData = {} as TransactionView;
+                        transactionData.errorMessage = "account number not found";
+                        return res.status(400).json(transactionData);
+                    }
+                }   
+                else {
+                    transactionData = {} as TransactionView;
+                    transactionData.errorMessage = "Low balance";
+                    return res.status(400).json(transactionData);
+                }
+            }
+            else {
+                transactionData = {} as TransactionView;
+                transactionData.errorMessage = "You can not transfer your self";
+                return res.status(401).json(transactionData);
+            }
+        }
+        else {
+            transactionData = {} as TransactionView;
+            transactionData.errorMessage = "Invalid login";
+            return res.status(400).json(transactionData);
+        }
+    }
+    catch(err) {
+        return res.status(200).json(err);
+    }
+})
 export default UserRouter;
