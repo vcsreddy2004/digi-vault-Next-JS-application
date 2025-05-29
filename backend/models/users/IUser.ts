@@ -5,6 +5,7 @@ export interface IUser extends Document {
     email:string,
     userName:string,
     password:string,
+    amount:number,
     accountNumber:number,
     accountType: "savings" | "admin"
     lastLogIn: Date,

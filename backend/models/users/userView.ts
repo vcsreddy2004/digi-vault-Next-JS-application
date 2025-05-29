@@ -6,7 +6,7 @@ export interface UserView {
     password:string,
     accountNumber:number,
     accountType: "admin" | "savings",
-    token:string,
+    amount:number,
     lastLogIn: Date | null,
     errorMessage:string
 }
