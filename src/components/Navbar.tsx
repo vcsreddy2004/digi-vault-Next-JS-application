@@ -15,8 +15,8 @@ export default function Navbar() {
         }
     }
     return (
-        <div className="bg-gray-800">
-            <div className="flex justify-between items-center md:hidden">
+        <div className="dark:bg-neutral-900 bg-gray-200 border-b-1 border-neutral-700">
+            <div className="flex justify-between items-center md:hidden">   
                 <div className='text-2xl p-3'>
                     Digi Vault
                 </div>
