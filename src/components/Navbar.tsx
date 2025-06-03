@@ -1,10 +1,10 @@
 "use client";
-import React, { useState } from 'react';
-
+import Link from 'next/link';
+import { useState } from 'react';
 export default function Navbar() {
   const [isMobileDropdownVisible, setIsMobileDropdownVisible] = useState(false);
   return (
-    <div className="dark:bg-neutral-900 bg-gray-200 border-b-1 border-neutral-700">
+    <div className="dark:bg-neutral-800 bg-gray-200 border-b-1 border-neutral-700">
       <div className="flex justify-between items-center md:hidden">   
         <div className='text-2xl p-3'>
           Digi Vault
@@ -28,23 +28,23 @@ export default function Navbar() {
       </div>
 
       <div className={`${isMobileDropdownVisible ? 'flex' : 'hidden'} flex-col p-3`} id='mobile-dropdown'>
-        <div className='p-2'><a href="/">Home</a></div>
-        <div className='p-2'><a href="/transactions">Transactions</a></div>
-        <div className='p-2'><a href="/transfer">Transfer</a></div>
-        <div className='p-2'><a href="/register">Register</a></div>
-        <div className='p-2'><a href="/login">Login</a></div>
+        <div className='p-2'><Link href="/">Home</Link></div>
+        <div className='p-2'><Link href="/transactions">Transactions</Link></div>
+        <div className='p-2'><Link href="/transfer">Transfer</Link></div>
+        <div className='p-2'><Link href="/register">Register</Link></div>
+        <div className='p-2'><Link href="/login">Login</Link></div>
       </div>
 
       <div className="hidden md:flex justify-between items-center">
         <div className='text-2xl p-3'>Digi Vault</div>
         <div className='flex gap-5'>
-          <div><a href="/">Home</a></div>
-          <div><a href="/transactions">Transactions</a></div>
-          <div><a href="/transfer">Transfer</a></div>
+          <div><Link href="/">Home</Link></div>
+          <div><Link href="/transactions">Transactions</Link></div>
+          <div><Link href="/transfer">Transfer</Link></div>
         </div>
         <div className='flex gap-5 p-3'>
-          <div><a href="/register">Register</a></div>
-          <div><a href="/login">Login</a></div>
+          <div><Link href="/register">Register</Link></div>
+          <div><Link href="/login">Login</Link></div>
         </div>
       </div>
     </div>
