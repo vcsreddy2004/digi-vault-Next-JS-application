@@ -29,7 +29,7 @@ export default function Navbar() {
 
       <div className={`${isMobileDropdownVisible ? 'flex' : 'hidden'} flex-col p-3`} id='mobile-dropdown'>
         <div className='p-2'><Link href="/">Home</Link></div>
-        <div className='p-2'><Link href="/transactions">Transactions</Link></div>
+        <div className='p-2'><Link href="/transactions">Transaction History</Link></div>
         <div className='p-2'><Link href="/transfer">Transfer</Link></div>
         <div className='p-2'><Link href="/register">Register</Link></div>
         <div className='p-2'><Link href="/login">Login</Link></div>
@@ -39,7 +39,7 @@ export default function Navbar() {
         <div className='text-2xl p-3'>Digi Vault</div>
         <div className='flex gap-5'>
           <div><Link href="/">Home</Link></div>
-          <div><Link href="/transactions">Transactions</Link></div>
+          <div><Link href="/transactions">Transaction History</Link></div>
           <div><Link href="/transfer">Transfer</Link></div>
         </div>
         <div className='flex gap-5 p-3'>
