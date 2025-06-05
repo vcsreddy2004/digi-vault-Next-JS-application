@@ -10,59 +10,59 @@ export default function Transactions() {
             <thead className="dark:bg-gray-900 bg-blue-400 text-2xl">
               <tr>
                 <td>
-                  <div className="h-12 w-full bg-gray-400 dark:bg-gray-800 rounded animate-pulse mx-auto"></div>
+                  <div className="h-12 w-full bg-blue-400 dark:bg-gray-800 rounded animate-pulse mx-auto"></div>
                 </td>
                 <td>
-                  <div className="h-12 w-full bg-gray-400 dark:bg-gray-800 rounded animate-pulse mx-auto"></div>
+                  <div className="h-12 w-full bg-blue-400 dark:bg-gray-800 rounded animate-pulse mx-auto"></div>
                 </td>
                 <td>
-                  <div className="h-12 w-full bg-gray-400 dark:bg-gray-800 rounded animate-pulse mx-auto"></div>
+                  <div className="h-12 w-full bg-blue-400 dark:bg-gray-800 rounded animate-pulse mx-auto"></div>
                 </td>
               </tr>
             </thead>
             <tbody className="dark:bg-gray-700 texl-xl">
               <tr>
                 <td>
-                  <div className="h-10 w-full bg-gray-400 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
+                  <div className="h-10 w-full bg-blue-300 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
                 </td>
                 <td>
-                  <div className="h-10 w-full bg-gray-400 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
+                  <div className="h-10 w-full bg-blue-300 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
                 </td>
                 <td>
-                  <div className="h-10 w-full bg-gray-400 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div className="h-10 w-full bg-gray-400 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
-                </td>
-                <td>
-                  <div className="h-10 w-full bg-gray-400 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
-                </td>
-                <td>
-                  <div className="h-10 w-full bg-gray-400 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
+                  <div className="h-10 w-full bg-blue-300 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <div className="h-10 w-full bg-gray-400 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
+                  <div className="h-10 w-full bg-blue-300 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
                 </td>
                 <td>
-                  <div className="h-10 w-full bg-gray-400 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
+                  <div className="h-10 w-full bg-blue-300 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
                 </td>
                 <td>
-                  <div className="h-10 w-full bg-gray-400 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
+                  <div className="h-10 w-full bg-blue-300 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <div className="h-10 w-full bg-gray-400 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
+                  <div className="h-10 w-full bg-blue-300 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
                 </td>
                 <td>
-                  <div className="h-10 w-full bg-gray-400 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
+                  <div className="h-10 w-full bg-blue-300 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
                 </td>
                 <td>
-                  <div className="h-10 w-full bg-gray-400 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
+                  <div className="h-10 w-full bg-blue-300 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div className="h-10 w-full bg-blue-300 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
+                </td>
+                <td>
+                  <div className="h-10 w-full bg-blue-300 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
+                </td>
+                <td>
+                  <div className="h-10 w-full bg-blue-300 dark:bg-gray-700 rounded animate-pulse mx-auto"></div>
                 </td>
               </tr>
             </tbody>
