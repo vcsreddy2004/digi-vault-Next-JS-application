@@ -1,4 +1,36 @@
+"use client";
+import { UserView } from "@/utils/models/users/userView"
+import { useState } from "react"
 export default function Register() {
+  let [userData,setUserData] = useState<UserView>({} as UserView);
+  let [confirmPassword,setConfirmPassword] = useState<string>("");
+  let [errors,setErrors] = useState<{[key:string]:boolean}>({});
+  const updateUserData = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setUserData((prev: UserView) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+    setErrors((prev)=>({
+      ...prev,
+      [e.target.name]:false,
+    }))
+  }
+  const updateConfirmPassword = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(e.target.value);
+  }
+  const registerUser = () => {
+    let currentErrors:{[key:string]:boolean} = {};
+    switch (true) {
+      case !userData.firstName || userData.firstName === "":currentErrors.firstName = true;
+      case !userData.lastName || userData.lastName === "":currentErrors.lastName = true;
+      case !userData.email || userData.email === "":currentErrors.email = true;
+      case !userData.password || userData.password === "":currentErrors.password = true;
+      case confirmPassword === "":currentErrors.confirmPassword = true;
+      case userData.password && confirmPassword && userData.password !== confirmPassword:currentErrors.password = true; currentErrors.confirmPassword = true; break;
+      default: break;
+    }
+    setErrors(currentErrors);
+  }
   return (
     <div className='dark:bg-neutral-900 h-screen pt-12'>
       <div className="dark:bg-gray-800 w-1/2 m-auto flex shadow-lg">
@@ -13,16 +45,16 @@ export default function Register() {
           </div>
           <div className='flex flex-col'>
             <span className='mx-2 '>First Name</span>
-            <input type="text" name="firstName" className='border border-black dark:border-gray-500 dark:focus:shadow-lg focus:shadow-gray-900 focus:outline-rose-500 focus:border-rose-700 focus:outline-1 caret-rose-600 m-2' />
+            <input type="text" name="firstName" onChange={updateUserData} className={`border ${errors.firstName? 'border-red-800' : 'border-black dark:border-gray-500'} dark:focus:shadow-lg focus:shadow-gray-900 focus:outline-rose-500 focus:border-rose-700 focus:outline-1 caret-rose-600 m-2`} />
             <span className='mx-2 '>Last Name</span>
-            <input type="text" name="lastName" className='border border-black dark:border-gray-500 dark:focus:shadow-lg focus:shadow-gray-900 focus:outline-rose-500 focus:border-rose-700 focus:outline-1 caret-rose-600 m-2' />
+            <input type="text" name="lastName" onChange={updateUserData} className={`border ${errors.lastName? 'border-red-800' : 'border-black dark:border-gray-500'} dark:focus:shadow-lg focus:shadow-gray-900 focus:outline-rose-500 focus:border-rose-700 focus:outline-1 caret-rose-600 m-2`} />
             <span className='mx-2 '>Email</span>
-            <input type="text" name="email" className='border border-black dark:border-gray-500 dark:focus:shadow-lg focus:shadow-gray-900 focus:outline-rose-500 focus:border-rose-700 focus:outline-1 caret-rose-600 m-2' />
+            <input type="text" name="email" onChange={updateUserData} className={`border ${errors.email? 'border-red-800' : 'border-black dark:border-gray-500'} dark:focus:shadow-lg focus:shadow-gray-900 focus:outline-rose-500 focus:border-rose-700 focus:outline-1 caret-rose-600 m-2`} />
             <span className='mx-2'>Password</span>
-            <input type="password" name="password" className='border border-black dark:border-gray-500 dark:focus:shadow-lg focus:shadow-gray-900 focus:outline-rose-500 focus:border-rose-700 focus:outline-1 caret-rose-600 m-2' />
+            <input type="password" name="password" onChange={updateUserData} className={`border ${errors.password? 'border-red-800' : 'border-black dark:border-gray-500'} dark:focus:shadow-lg focus:shadow-gray-900 focus:outline-rose-500 focus:border-rose-700 focus:outline-1 caret-rose-600 m-2`} />
             <span className='mx-2'>Confirm Password</span>
-            <input type="password" name="confirmPassword" className='border border-black dark:border-gray-500 dark:focus:shadow-lg focus:shadow-gray-900 focus:outline-rose-500 focus:border-rose-700 focus:outline-1 caret-rose-600 m-2' />
-            <input type="button" value="Register  " className='bg-green-700/40 mx-12 hover:cursor-pointer animate duration-300 m-5 hover:bg-green-900/30 hover:scale-120' />
+            <input type="password" name="confirmPassword" onChange={updateConfirmPassword} className={`border ${errors.confirmPassword? 'border-red-800' : 'border-black dark:border-gray-500'} dark:focus:shadow-lg focus:shadow-gray-900 focus:outline-rose-500 focus:border-rose-700 focus:outline-1 caret-rose-600 m-2`} />
+            <input type="button" value="Register" onClick={registerUser} className='bg-green-700/40 mx-12 hover:cursor-pointer animate duration-300 m-5 hover:bg-green-900/30 hover:scale-110' />
           </div>
         </div>  
       </div>    

@@ -16,7 +16,7 @@ export default function Login() {
             <input type="text" name="email" className='border border-black dark:border-gray-500 dark:focus:shadow-lg focus:shadow-gray-900 focus:outline-rose-500 focus:border-rose-700 focus:outline-1 caret-rose-600 m-2' />
             <span className='mx-2'>Password</span>
             <input type="password" name="password" className='border border-black dark:border-gray-500 dark:focus:shadow-lg focus:shadow-gray-900 focus:outline-rose-500 focus:border-rose-700 focus:outline-1 caret-rose-600 m-2' />
-            <input type="button" value="Log In" className='bg-green-700/40 mx-12 hover:cursor-pointer animate duration-300 m-5 hover:bg-green-900/30 hover:scale-120' />
+            <input type="button" value="Log In" className='bg-green-700/40 mx-12 hover:cursor-pointer animate duration-300 m-5 hover:bg-green-900/30 hover:scale-110' />
           </div>
         </div>  
       </div>

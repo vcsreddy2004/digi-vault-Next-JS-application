@@ -29,7 +29,7 @@ export default function Transfer() {
             <span className='mx-2 '>Amount</span>
             <input type="number" name="amount" onChange={updateAmount} className='border border-black dark:border-gray-500 dark:focus:shadow-lg focus:shadow-gray-900 focus:outline-rose-500 focus:border-rose-700 focus:outline-1 caret-rose-600 m-2' />
             <span>{amountInWords}</span>
-            <input type="button" value="Transfer" className='bg-red-700 mx-12 hover:cursor-pointer animate duration-300 m-5 hover:bg-red-950 hover:scale-120' />
+            <input type="button" value="Transfer" className='bg-red-700 mx-12 hover:cursor-pointer animate duration-300 m-5 hover:bg-red-950 hover:scale-110' />
           </div>
         </div>  
       </div>    
