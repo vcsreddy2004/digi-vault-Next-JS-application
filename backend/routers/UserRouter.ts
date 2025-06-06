@@ -17,7 +17,6 @@ UserRouter.post("/register",[
     body("email").not().isEmpty().withMessage("Email can not left empty"),
     body("userName").not().isEmpty().withMessage("User Name can not left empty"),
     body("password").not().isEmpty().withMessage("Password can not left empty"),
-    body("confirmPassword").not().isEmpty().withMessage("Confirm Password can not left empty"),
     body("email").isEmail().withMessage("Invalid Email"),
 ],async(req:express.Request,res:express.Response)=>{
     let userData:UserView = {
@@ -81,7 +80,7 @@ UserRouter.post("/register",[
         return res.status(500).json(err);
     }
 });
-UserRouter.get("/login",[
+UserRouter.post("/login",[
     body("userName").not().isEmpty().withMessage("User Name can not left empty"),
     body("password").not().isEmpty().withMessage("Password can not left empty"),
 ],async(req:express.Request,res:express.Response)=>{
@@ -167,6 +166,42 @@ UserRouter.get("/me",AuthUser,async(req:express.Request,res:express.Response)=>{
         return res.status(500).json(err);
     }
 });
+UserRouter.get("/logout",AuthUser,async(req:express.Request,res:express.Response)=>{
+    try {
+        res.clearCookie("token");
+        return res.status(200).json({});
+    }
+    catch(err) {
+        return res.status(500).json(err);
+    }
+});
+UserRouter.get("/transactions-list",AuthUser,async(req:express.Request,res:express.Response)=>{
+    let pages = req.query.pages;
+    let userData:UserView = req.body.userData;
+    try {
+        const page = typeof pages === "string" ? parseInt(pages, 10) : 1;
+        const limit = 5;
+        const skip = ((page || 1) - 1) * limit;
+        let transaction:ITransaction[] = await Transaction.find({
+            $or:[
+                {fromAccount:userData.accountNumber},
+                {toAccount:userData.accountNumber}
+            ]
+        }).skip(skip).limit(limit);
+        let transactionData: TransactionView[] = transaction.map((transa) => ({
+            fromAccount: transa.fromAccount,
+            toAccount: transa.toAccount,
+            amount: transa.amount,
+            timeStamp: transa.timeStamp,
+            type: transa.type,
+            errorMessage: ""
+        }));
+        return res.status(200).json(transactionData);
+    }
+    catch(err) {
+        return res.status(500).json(err);
+    }
+})
 UserRouter.patch("/transfer",AuthUser,[
     body("toAccount").not().isEmpty().withMessage("TO account is not mentioned"),
     body("amount").not().isEmpty().withMessage("Amount is not mentioned"),

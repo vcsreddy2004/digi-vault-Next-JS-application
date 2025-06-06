@@ -1,9 +1,12 @@
 "use client";
-import React, { useState } from 'react'
+import { AuthContext } from '@/components/AuthProvider';
+import { useRouter } from 'next/navigation';
+import React, { useContext, useEffect, useState } from 'react'
 import { ToWords } from 'to-words'
 export default function Transfer() {
   const toWords = new ToWords({localeCode:"en-US"});
   const [amountInWords,setAmountInWords] = useState("");
+  let router = useRouter();
   let updateAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
     const words = toWords.convert(value, { currency: true });
