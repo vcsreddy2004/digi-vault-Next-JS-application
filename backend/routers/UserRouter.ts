@@ -147,7 +147,7 @@ UserRouter.post("/login",[
                 }
                 else {
                     userData = {} as UserView;
-                    userData.errorMessage = "Username dose ont exist";
+                    userData.errorMessage = "Username dose not exist";
                     return res.status(400).json(userData);
                 }
             }

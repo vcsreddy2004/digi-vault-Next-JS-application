@@ -8,6 +8,7 @@ export default function Login() {
   let [userData, setUserData] = useState<UserView>({} as UserView);
   let [errors, setErrors] = useState<{ [key: string]: boolean }>({});
   let [errorBackend, setErrorBackend] = useState("");
+  let auth = useContext(AuthContext);
   let router = useRouter();
   let updateUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserData(prev => ({
@@ -42,6 +43,7 @@ export default function Login() {
             setErrorBackend(error.errorMessage);
           }
           else {
+            auth.getData();
             router.push("/transactions");
           }
         } 

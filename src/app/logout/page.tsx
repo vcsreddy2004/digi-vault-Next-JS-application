@@ -1,22 +1,14 @@
 "use client";
+import { AuthContext } from '@/components/AuthProvider';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
 export default function LogOut() {
   const router = useRouter();
-
+  const auth = useContext(AuthContext);
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/logout`, {
-      method: "GET",
-      credentials: "include",
-    })
-      .then(res => {
-        if (res.ok) {
-          router.replace("/");
-        }
-      });   
-  }, [router]);
-
+    auth.logOut();
+  }, []);
   return (
     <div className="text-center mt-10 text-lg text-gray-600">Logging you out...</div>
   );

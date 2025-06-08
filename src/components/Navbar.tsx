@@ -4,18 +4,11 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from './AuthProvider';
 
 export default function Navbar() {
-  const auth = useContext(AuthContext);
   const [isMobileDropdownVisible, setIsMobileDropdownVisible] = useState(false);
-  const [isLogedin, setIsLogedin] = useState(false);
-
-  useEffect(() => {
-    if (auth?.userData && auth.userData.email) {
-      setIsLogedin(true);
-    } else {
-      setIsLogedin(false);
-    }
-  }, [auth?.userData]);
-
+  const auth = useContext(AuthContext);
+  useEffect(()=>{
+    auth.getData();
+  },[]);
   return (
     <div className="dark:bg-neutral-800 bg-gray-200 border-b-1 border-neutral-700">
       <div className="flex justify-between items-center md:hidden">
@@ -42,8 +35,8 @@ export default function Navbar() {
         <div className='p-2'><Link href="/">Home</Link></div>
         <div className='p-2'><Link href="/transactions">Transaction History</Link></div>
         <div className='p-2'><Link href="/transfer">Transfer</Link></div>
-        {isLogedin==true ? (
-          <div className='p-2'><Link href="/logOut">Logout</Link></div>
+        {Object.keys(auth.userData).length > 0 ? (
+          <div className='p-2'><Link href="/logout">Logout</Link></div>
         ) : (
           <>
             <div className='p-2'><Link href="/register">Register</Link></div>
@@ -60,12 +53,12 @@ export default function Navbar() {
           <div><Link href="/transfer">Transfer</Link></div>
         </div>
         <div className='flex gap-5 p-3'>
-          {isLogedin==true ? (
-            <div><Link href="/logOut">Logout</Link></div>
+          {Object.keys(auth.userData).length > 0 ? (
+            <div className='p-2'><Link href="/logout">Logout</Link></div>
           ) : (
             <>
-              <div><Link href="/register">Register</Link></div>
-              <div><Link href="/login">Login</Link></div>
+              <div className='p-2'><Link href="/register">Register</Link></div>
+              <div className='p-2'><Link href="/login">Login</Link></div>
             </>
           )}
         </div>
