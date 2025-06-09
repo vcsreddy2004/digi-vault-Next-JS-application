@@ -17,7 +17,6 @@ export const AuthContext = createContext<AuthContextType>({
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const [userData, setUserData] = useState<UserView>({} as UserView);
   const router = useRouter();
-  console.log(JSON.stringify(userData));
   let getData = () => {
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/me`, {
       method: "GET",

@@ -5,6 +5,7 @@ import { AuthContext } from './AuthProvider';
 
 export default function Navbar() {
   const [isMobileDropdownVisible, setIsMobileDropdownVisible] = useState(false);
+  const [isProfileDropDownMenu,setIsProfileDropDownMenu] = useState(false);
   const auth = useContext(AuthContext);
   useEffect(()=>{
     auth.getData();
@@ -36,7 +37,9 @@ export default function Navbar() {
         <div className='p-2'><Link href="/transactions">Transaction History</Link></div>
         <div className='p-2'><Link href="/transfer">Transfer</Link></div>
         {Object.keys(auth.userData).length > 0 ? (
-          <div className='p-2'><Link href="/logout">Logout</Link></div>
+          <>
+            <div className='p-2'><Link href="/logout">Logout</Link></div>
+          </>
         ) : (
           <>
             <div className='p-2'><Link href="/register">Register</Link></div>
@@ -54,7 +57,15 @@ export default function Navbar() {
         </div>
         <div className='flex gap-5 p-3'>
           {Object.keys(auth.userData).length > 0 ? (
-            <div className='p-2'><Link href="/logout">Logout</Link></div>
+            <>
+              <svg xmlns="http://www.w3.org/2000/svg" onClick={() => setIsProfileDropDownMenu(prev => !prev)} fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 hover:cursor-pointer">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+              </svg>
+              <div className={`${isProfileDropDownMenu? 'fixed':'hidden'} w-30 mt-6 right-4 bg-neutral-700`}>
+                <Link href="/profile"><div className='p-2 hover:bg-gray-900 hover:cursor-pointer'>Profile</div></Link>
+                <Link href="/logout"><div className='p-2 hover:bg-gray-900 hover:cursor-pointer'>Logout</div></Link>
+              </div>
+            </>
           ) : (
             <>
               <div className='p-2'><Link href="/register">Register</Link></div>
