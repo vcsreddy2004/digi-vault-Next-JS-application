@@ -46,20 +46,24 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className={`${isMobileDropdownVisible ? 'flex' : 'hidden'} flex-col p-3`} id='mobile-dropdown'>
-        <div className='p-2'><Link href="/">Home</Link></div>
-        <div className='p-2'><Link href="/transactions">Transaction History</Link></div>
-        <div className='p-2'><Link href="/transfer">Transfer</Link></div>
+      <div className={`${isMobileDropdownVisible ? 'flex' : 'hidden'} md:hidden flex-col`} id='mobile-dropdown'>
+        <div className='p-2 hover:bg-neutral-900 hover:cursor-pointer'><Link href="/">Home</Link></div>
+        <div className='p-2 hover:bg-neutral-900 hover:cursor-pointer'><Link href="/transactions">Transaction History</Link></div>
+        <div className='p-2 hover:bg-neutral-900 hover:cursor-pointer'><Link href="/transfer">Transfer</Link></div>
         {Object.keys(auth.userData).length > 0 ? (
           <>
-            <div className='p-2'><Link href="/logout">Logout</Link></div>
+            <div className="p-2">
+              <hr className='text-gray-400' />
+            </div>
+            <Link href="/profile"><div className='p-2 hover:bg-neutral-900 hover:cursor-pointer'>Profile</div></Link>
+            <Link href="/logout"><div className='p-2 hover:bg-neutral-900 hover:cursor-pointer'>Logout</div></Link>
           </>
         ) : (
           <>
             <div className='p-2'><Link href="/register">Register</Link></div>
             <div className='p-2'><Link href="/login">Login</Link></div>
           </>
-        )}
+        )}  
       </div>
 
       <div className="hidden md:flex justify-between items-center">
