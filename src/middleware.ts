@@ -4,7 +4,7 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get("token");
   const pathname = request.nextUrl.pathname;
   const isAuthPage = pathname === "/login" || pathname === "/register";
-  const isProtectedPage = pathname.startsWith("/transactions") || pathname.startsWith("/transfer") || pathname.startsWith("/profile");
+  const isProtectedPage = pathname.startsWith("/transactions") || pathname.startsWith("/transfer") || pathname.startsWith("/profile") || pathname.startsWith("/admin");
   if (token && isAuthPage) {
     return NextResponse.redirect(new URL("/", request.url));
   }
@@ -16,5 +16,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/login", "/register", "/transfer/:path*", "/transactions/:path*", "/profile"],
+  matcher: ["/login", "/register", "/transfer/:path*", "/transactions/:path*", "/admin", "/profile"],
 };

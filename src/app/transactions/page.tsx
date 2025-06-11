@@ -12,38 +12,38 @@ export default function Transactions() {
   const [endOfPage,setEndOfPage] = useState(false);
   const auth = useContext(AuthContext);
   useEffect(() => {
-  const fetchTransactions = async () => {
-    try {
-      const url = process.env.NEXT_PUBLIC_BACKEND_URL;
-      const res = await fetch(`${url}/api/users/transactions-list?pages=${pageNo}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include"
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setTransactionsData(data);
-        const nextRes = await fetch(`${url}/api/users/transactions-list?pages=${pageNo + 1}`, {
+    const fetchTransactions = async () => {
+      try {
+        const url = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const res = await fetch(`${url}/api/users/transactions-list?pages=${pageNo}`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include"
         });
-        if (nextRes.ok) {
-          const nextData = await nextRes.json();
-          setEndOfPage(!nextData || nextData.length === 0);
+        if (res.ok) {
+          const data = await res.json();
+          setTransactionsData(data);
+          const nextRes = await fetch(`${url}/api/users/transactions-list?pages=${pageNo + 1}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include"
+          });
+          if (nextRes.ok) {
+            const nextData = await nextRes.json();
+            setEndOfPage(!nextData || nextData.length === 0);
+          } else {
+            setEndOfPage(true);
+          }
         } else {
-          setEndOfPage(true);
+          router.push("/");
         }
-      } else {
+      } catch (err) {
         router.push("/");
       }
-    } catch (err) {
-      router.push("/");
-    }
-  };
+    };
 
-  fetchTransactions();
-}, [pageNo]);
+    fetchTransactions();
+  }, [pageNo]);
 
 
   return (

@@ -6,7 +6,37 @@ import User from "../models/users/User";
 import Transaction from "../models/transaction/Transaction";
 import { ITransaction } from "../models/transaction/ITransaction";
 import AuthUser from "../middleWare/AuthUser";
+import { UserView } from "../models/users/userView";
 const AdminRouter:express.Router = express.Router();
+AdminRouter.get("/users-list",AuthUser,async(req:express.Request,res:express.Response)=>{
+    try {
+        const userData:IUser = req.body.userData;
+        if(userData.accountType==="savings") {
+            let user:UserView = {} as UserView;
+            user.errorMessage = "YOu have no rights to access this Service";
+            return res.status(401).json(user);
+        }
+        else {
+            let users:IUser[] = await User.find();
+            let usersList:UserView[] = users.map((e)=>({
+                firstName:e.firstName,
+                lastName:e.lastName,
+                email:e.email,
+                userName:e.userName,
+                accountNumber:e.accountNumber,
+                accountType:e.accountType,
+                amount:e.amount,
+                password:"",
+                lastLogIn:e.lastLogIn,
+                errorMessage:""
+            }));
+            return res.status(200).json(usersList);
+        }
+    }
+    catch(err) {
+        return res.status(500).json(err);
+    }
+});
 AdminRouter.patch("/transaction",AuthUser,[
     body("account").not().isEmpty().withMessage("From Account can not left empty"),
     body("amount").not().isEmpty().withMessage("Amount can not left empty"),
@@ -96,5 +126,5 @@ AdminRouter.patch("/transaction",AuthUser,[
     catch(err) {
         return res.status(500).json(err);
     }
-})
+});
 export default AdminRouter;
