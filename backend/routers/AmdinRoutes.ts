@@ -72,7 +72,7 @@ AdminRouter.patch("/transaction",AuthUser,[
                 }
                 let user:IUser | null = await User.findOne({accountNumber: transactionData.fromAccount});
                 if (user) {
-                    if(user.amount>transactionData.amount) {
+                    if(user.amount>=transactionData.amount) {
                         const updatedUser = await User.findOneAndUpdate(
                             { accountNumber: transactionData.fromAccount },
                             { amount: user.amount - transactionData.amount },
