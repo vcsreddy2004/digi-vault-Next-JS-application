@@ -38,12 +38,13 @@ export default function Transactions() {
           router.push("/");
         }
       } catch (err) {
+        console.log(err);
         router.push("/");
       }
     };
 
     fetchTransactions();
-  }, [pageNo]);
+  }, [pageNo,router]);
 
 
   return (

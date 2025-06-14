@@ -4,6 +4,7 @@ interface UserDataProps {
     userData:UserView
 }
 export default function UserData({ userData }: UserDataProps) {
+    if (!userData || !userData.firstName) return null;
     return (
         <>
             <div className='dark:bg-gray-800 dark:shadow-none shadow-xl dark:border-none border-1 border-neutral-500/30 col-span-2 hidden md:block'>

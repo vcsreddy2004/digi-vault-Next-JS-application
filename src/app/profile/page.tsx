@@ -4,7 +4,7 @@ import React, { useContext } from 'react'
 import Balance from './@Balance/page';
 import UserData from './@UserData/page';
 export default function Profile() {
-    let auth = useContext(AuthContext);
+    const auth = useContext(AuthContext);
     return (
         <>
             <div className="grid md:grid-cols-3 gird-cols-1 gap-3 w-1/2 m-auto mt-12">

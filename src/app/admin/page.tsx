@@ -2,20 +2,20 @@
 import { AuthContext } from '@/components/AuthProvider';
 import { UserView } from '@/utils/models/users/userView';
 import { useRouter } from 'next/navigation';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 interface TransactionType  {
     account:number,
     type:"withdrawal" | "deposit",
     amount:number
 }
-import React, { HTMLAttributes, useContext, useEffect, useState } from 'react';
 export default function Admin() {
     const router = useRouter();
     const [usersList, setUsersList] = useState<UserView[] | null>(null);
-    let auth = useContext(AuthContext);
+    const auth = useContext(AuthContext);
     const [transactionBoxVisible,setTransactionBoxVisible] = useState(false);
     const [transactionData,settTransactionData] = useState<TransactionType>({} as TransactionType);
     const [errorMessage,setErrorMessage] = useState("");
-    const fetchUsersList = async () => {
+    const fetchUsersList = useCallback(async () => {
         try {
             const url = process.env.NEXT_PUBLIC_BACKEND_URL;
             const res = await fetch(`${url}/api/admins/users-list`, {
@@ -28,9 +28,10 @@ export default function Admin() {
                 setUsersList(data);
             }
         } catch (err) {
+            console.log(err);
             router.replace("/");
         }
-    };
+    },[router]);
     useEffect(() => {
         if (!auth.userData || !auth.userData.accountType) {
             return;
@@ -43,7 +44,7 @@ export default function Admin() {
             return;
         }
         fetchUsersList();
-    }, [auth.userData]);
+    }, [auth.userData,router]);
     const openTransactionBox = (e: React.MouseEvent<HTMLInputElement>, user: UserView) => {
         const target = e.target as HTMLInputElement;
         settTransactionData((prev) => ({   
@@ -54,10 +55,10 @@ export default function Admin() {
         setTransactionBoxVisible(true);
     }
     const transfer = async () => {
-        let url = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const url = process.env.NEXT_PUBLIC_BACKEND_URL;
         try {
             if(url) {
-                let res = await fetch(`${url}/api/admins/transaction`,{
+                const res = await fetch(`${url}/api/admins/transaction`,{
                     method:"PATCH",
                     headers: { "Content-Type": "application/json" },
                     credentials: "include",

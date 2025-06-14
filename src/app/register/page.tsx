@@ -1,14 +1,13 @@
 "use client";
-import { AuthContext } from "@/components/AuthProvider";
 import { UserView } from "@/utils/models/users/userView"
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react"
+import { useState } from "react"
 export default function Register() {
-  let [userData,setUserData] = useState<UserView>({} as UserView);
-  let [confirmPassword,setConfirmPassword] = useState<string>("");
-  let [errors,setErrors] = useState<{[key:string]:boolean}>({});
-  let [errorBackend,setErrorBackend] = useState("");
-  let router = useRouter();
+  const [userData,setUserData] = useState<UserView>({} as UserView);
+  const [confirmPassword,setConfirmPassword] = useState<string>("");
+  const [errors,setErrors] = useState<{[key:string]:boolean}>({});
+  const [errorBackend,setErrorBackend] = useState("");
+  const router = useRouter();
   const updateUserData = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setUserData((prev: UserView) => ({
       ...prev,
@@ -27,7 +26,7 @@ export default function Register() {
     }))
   }
   const registerUser = async () => {
-    let currentErrors:{[key:string]:boolean} = {};
+    const currentErrors:{[key:string]:boolean} = {};
     switch (true) {
       case !userData.firstName || userData.firstName === "":currentErrors.firstName = true;
       case !userData.lastName || userData.lastName === "":currentErrors.lastName = true;
@@ -40,7 +39,7 @@ export default function Register() {
     }
     setErrors(currentErrors);
     if (Object.keys(currentErrors).length === 0) {
-    let url = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const url = process.env.NEXT_PUBLIC_BACKEND_URL;
     if (url) {
       try {
         const res = await fetch(`${url}/api/users/register`, {
@@ -55,8 +54,8 @@ export default function Register() {
         else {
           router.push("/login");
         }
-      } catch (err: any) {
-        setErrorBackend(err?.message || "An error occurred");
+      } catch (err) {
+        setErrorBackend(err instanceof Error? err.message : typeof err === "string"? err : "An error occurred");
       }
     } else {
       setErrorBackend("Something went wrong. Our team has been notified and is working on a fix.");

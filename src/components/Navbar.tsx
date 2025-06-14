@@ -10,7 +10,7 @@ export default function Navbar() {
   const profileMenuRef = useRef<HTMLDivElement>(null);
   useEffect(()=>{
     auth.getData();
-  },[]);
+  },[auth]);
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (profileMenuRef.current && !profileMenuRef.current.contains(event.target as Node)) {

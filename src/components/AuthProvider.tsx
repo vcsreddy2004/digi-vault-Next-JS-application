@@ -17,7 +17,7 @@ export const AuthContext = createContext<AuthContextType>({
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const [userData, setUserData] = useState<UserView>({} as UserView);
   const router = useRouter();
-  let getData = () => {
+  const getData = () => {
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/me`, {
       method: "GET",
       credentials: "include",

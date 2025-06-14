@@ -2,15 +2,15 @@
 import { AuthContext } from "@/components/AuthProvider";
 import { UserView } from "@/utils/models/users/userView";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
 export default function Login() {
-  let [userData, setUserData] = useState<UserView>({} as UserView);
-  let [errors, setErrors] = useState<{ [key: string]: boolean }>({});
-  let [errorBackend, setErrorBackend] = useState("");
-  let auth = useContext(AuthContext);
-  let router = useRouter();
-  let updateUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [userData, setUserData] = useState<UserView>({} as UserView);
+  const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
+  const [errorBackend, setErrorBackend] = useState("");
+  const auth = useContext(AuthContext);
+  const router = useRouter();
+  const updateUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
@@ -21,7 +21,7 @@ export default function Login() {
     }));
   }
   const loginUser = async() => {
-    let currentErrors:{[key:string]:boolean} = {};
+    const currentErrors:{[key:string]:boolean} = {};
     switch (true) {
       case !userData.userName || userData.userName === "":currentErrors.userName = true;
       case !userData.password || userData.password === "":currentErrors.password = true;
@@ -29,7 +29,7 @@ export default function Login() {
     }
     setErrors(currentErrors);
     if(Object.keys(errors).length === 0) {
-      let url = process.env.NEXT_PUBLIC_BACKEND_URL;
+      const url = process.env.NEXT_PUBLIC_BACKEND_URL;
       if(url) {
         try {
           const res = await fetch(`${url}/api/users/login`, {
@@ -47,8 +47,12 @@ export default function Login() {
             router.push("/transactions");
           }
         } 
-        catch (err: any) {
-          setErrorBackend(err?.message || "An error occurred");
+        catch (err) {
+          if (err instanceof Error) {
+            setErrorBackend(err.message);
+          } else {
+            setErrorBackend("An error occurred");
+          }
         }
       }
       else {

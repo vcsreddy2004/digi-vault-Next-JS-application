@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 import mongoose from "mongoose";
 import { ITransaction } from "./ITransaction";
 
-let transactionSchema: Schema = new mongoose.Schema({
+const transactionSchema: Schema = new mongoose.Schema({
     fromAccount:{type:Number,default:0},
     toAccount:{type:Number,default:0},
     amount:{type:Number,require:true},
