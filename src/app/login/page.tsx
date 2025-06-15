@@ -19,6 +19,7 @@ export default function Login() {
       ...prev,
       [e.target.name]: false,
     }));
+    setErrorBackend("");
   }
   const loginUser = async() => {
     const currentErrors:{[key:string]:boolean} = {};

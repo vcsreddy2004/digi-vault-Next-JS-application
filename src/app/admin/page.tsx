@@ -44,7 +44,7 @@ export default function Admin() {
             return;
         }
         fetchUsersList();
-    }, [auth.userData,router]);
+    }, [auth.userData,router,fetchUsersList]);
     const openTransactionBox = (e: React.MouseEvent<HTMLInputElement>, user: UserView) => {
         const target = e.target as HTMLInputElement;
         settTransactionData((prev) => ({   
@@ -126,7 +126,7 @@ export default function Admin() {
                             <span className='self-baseline'>Type</span>
                             <input type="text" disabled value={transactionData.type} className='w-full border border-black dark:border-gray-800 dark:focus:shadow-lg focus:outline-rose-500 focus:border-rose-700 focus:outline-1 focus:shadow-gray-900 caret-rose-600 m-2 hover:cursor-not-allowed' name="type" />
                             <span className='self-baseline'>Amount</span>
-                            <input type="number" onChange={(e)=>{settTransactionData(prev=>({...prev,amount:Number(e.target.value)}))}} className='w-full border border-black dark:border-gray-800 dark:focus:shadow-lg focus:outline-rose-500 focus:border-rose-700 focus:outline-1 focus:shadow-gray-900 caret-rose-600 m-2' name="amount" />
+                            <input type="number" defaultValue={0} onChange={(e)=>{settTransactionData(prev=>({...prev,amount:Number(e.target.value)}))}} className='w-full border border-black dark:border-gray-800 dark:focus:shadow-lg focus:outline-rose-500 focus:border-rose-700 focus:outline-1 focus:shadow-gray-900 caret-rose-600 m-2' name="amount" />
                             <input type="button" value={transactionData.type} onClick={()=>transfer()} className='bg-green-700/40 w-full hover:cursor-pointer animate duration-300 hover:bg-green-900/40 hover:scale-110' />
                         </div>
                     </div>

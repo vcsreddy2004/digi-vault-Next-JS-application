@@ -201,9 +201,9 @@ UserRouter.get("/transactions-list",AuthUser,async(req:express.Request,res:expre
     catch(err) {
         return res.status(500).json(err);
     }
-})
+});
 UserRouter.patch("/transfer",AuthUser,[
-    body("toAccount").not().isEmpty().withMessage("TO account is not mentioned"),
+    body("toAccount").not().isEmpty().withMessage("To account is not mentioned"),
     body("amount").not().isEmpty().withMessage("Amount is not mentioned"),
 ],async(req:express.Request,res:express.Response)=>{
     let transactionData:TransactionView = {
@@ -215,11 +215,18 @@ UserRouter.patch("/transfer",AuthUser,[
         errorMessage:""
     }
     try {
+        let errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            transactionData = {} as TransactionView;
+            const errorArray = errors.array();
+            transactionData.errorMessage = errorArray.length > 0 ? errorArray[0].msg : "Validation error";
+            return res.status(400).json(transactionData);
+        }
         let userData:UserView = req.body.userData;
         let user:IUser | null = await User.findOne({firstName:userData.firstName,lastName:userData.lastName,email:userData.email});
         if(user) {
             if(user.accountNumber!==transactionData.toAccount) {
-                if(user.amount>transactionData.amount) {
+                if(user.amount>=transactionData.amount) {
                     let secondParty:IUser | null = await User.findOne({accountNumber:transactionData.toAccount});
                     if(secondParty) {
                         user = await User.findOneAndUpdate({accountNumber:user.accountNumber},{amount:user.amount-transactionData.amount});
